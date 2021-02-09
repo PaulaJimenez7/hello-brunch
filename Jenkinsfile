@@ -12,6 +12,16 @@ pipeline {
                 sh 'docker-compose build'
             }
         }
+        stage("trivy"){
+            steps{
+                sh 'trivy filesystem --format json --output results.json .'
+            }
+            post{
+                always{
+                    recordIssues(tools: [trivy(pattern: 'results.json')])
+                }
+            }
+        }
         stage('deploy') {
             steps {
                 sh 'docker-compose up -d'
