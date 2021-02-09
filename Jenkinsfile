@@ -14,7 +14,7 @@ pipeline {
         }
         stage("trivy"){
             steps{
-                sh 'trivy filesystem --format json --output results.json .'
+                sh 'trivy image --format json --output results.json hello-brunch'
             }
             post{
                 always{
