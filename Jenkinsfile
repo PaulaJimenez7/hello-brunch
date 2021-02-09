@@ -14,11 +14,12 @@ pipeline {
         }
         stage("trivy"){
             steps{
-                sh 'trivy image --format json --output results.json hello-brunch'
+                sh 'trivy filesystem -f json -o trivy-fs.json .'
+                sh 'trivy image --format json --output trivy-image.json hello-brunch'
             }
             post{
                 always{
-                    recordIssues(tools: [trivy(pattern: 'results.json')])
+                    recordIssues enabledForFailure: true, aggregatingResults:true, tool: trivy(pattern: 'trivy-*.json')
                 }
             }
         }
