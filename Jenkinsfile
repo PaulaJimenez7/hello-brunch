@@ -24,6 +24,13 @@ pipeline {
                 }
             }
         }
+        stage('Deploy'){
+            steps{
+                withCredentials([sshUserPrivateKey(credentialsId: 'deploy-ssh')]) {
+                    sh 'ssh -t -o "StrictHostKeyChecking no" deploy@10.250.13.1 'docker-compose pull && docker-compose up -d'
+                }
+            }
+        }
     }
 }
 
