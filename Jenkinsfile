@@ -12,20 +12,11 @@ pipeline {
                 sh 'docker-compose build'
             }
         }
-        stage("trivy"){
+        stage("Publish"){
             steps{
-                sh 'trivy filesystem -f json -o trivy-fs.json .'
-                sh 'trivy image --format json --output trivy-image.json hello-brunch'
-            }
-            post{
-                always{
-                    recordIssues enabledForFailure: true, aggregatingResults:true, tool: trivy(pattern: 'trivy-*.json')
+                withDockerRegistry(credentialsId: 'gitlab-registry', url: 'http://10.250.13.1:5050') {
+                    
                 }
-            }
-        }
-        stage('deploy') {
-            steps {
-                sh 'docker-compose up -d'
             }
         }
     }
