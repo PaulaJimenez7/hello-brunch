@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy'){
             steps{
                 sshagent(credentials:['deploy-ssh']){
-                    sh 'ssh -t -o "StrictHostKeyChecking no" deploy@10.250.13.1 "docker-compose pull && docker-compose up -d"'
+                    sh 'ssh -t -o "StrictHostKeyChecking no" deploy@10.250.13.1 "docker stack deploy --with-registry-auth -c docker-compose.yml brunch"'
                 }
             }
         }
