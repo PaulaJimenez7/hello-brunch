@@ -4,4 +4,8 @@ services:
     image: hello-brunch
     build: .
     ports:
-      - "8080:80"
+      - "80:80"
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "10.250.13.1:24224"

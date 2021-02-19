@@ -5,3 +5,4 @@ Dockerfile
 .dockerignore
 docker-compese.yml
 README.md
+Jenkinsfile
