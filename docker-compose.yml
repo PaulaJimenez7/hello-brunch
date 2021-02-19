@@ -4,4 +4,8 @@ services:
     image: hello-brunch
     build: .
     ports:
-      - "8080:80"
+      - "80:80"
+    logging:
+      driver: loki
+      options:
+        loki-url: http://10.250.13.1:3100/loki/api/v1/push
